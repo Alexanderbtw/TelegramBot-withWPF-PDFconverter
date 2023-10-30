@@ -86,6 +86,7 @@ namespace WPFapp
                     FileStream fs = System.IO.File.OpenWrite(full_path);
                     await bot.DownloadFileAsync(filePath, fs);
                     fs.Close();
+                    fs.Dispose();
 
                     Task pdfTask = Task.Run(() => ConvertToPDF(full_path));
                     pdfTask.Wait();
@@ -95,6 +96,7 @@ namespace WPFapp
                         chatId: update.Message.Chat.Id, 
                         document: InputFile.FromStream(stream, "Out.pdf"),
                         caption: "Porno");
+                    stream.Dispose();
                     return;
                 }
             }
